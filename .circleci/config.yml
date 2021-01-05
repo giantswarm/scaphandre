@@ -1,0 +1,19 @@
+version: 2.1
+
+orbs:
+  architect: giantswarm/architect@1.1.0
+
+workflows:
+  build:
+    jobs:
+      - architect/push-to-docker:
+          context: "architect"
+          name: push-scaphandre-to-quay
+          image: "quay.io/giantswarm/scaphandre"
+          username_envar: "QUAY_USERNAME"
+          password_envar: "QUAY_PASSWORD"
+          # Needed to trigger job also on git tag.
+          filters:
+            tags:
+              only: /^v.*/
+              
