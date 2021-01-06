@@ -28,7 +28,7 @@ FROM ubuntu:20.10 as runtime
 WORKDIR app
 
 RUN apt-get update \
-    && apt-get install -y ca-certificates tzdata \
+    && DEBIAN_FRONTEND="noninteractive" apt-get install -y ca-certificates tzdata \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /app/target/release/scaphandre /usr/local/bin
