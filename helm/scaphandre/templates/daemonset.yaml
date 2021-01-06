@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{ .Release.name }}
+  labels:
+    app.kubernetes.io/name: {{ .Release.name }}
+spec:
+  updateStrategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Release.name }}
+  template:
+    metadata:
+      name: {{ .Release.name }}
+      labels:
+        app.kubernetes.io/name: {{ .Release.name }}
+    spec:
+      tolerations:
+      # Tolerate all taints for observability
+      - operator: "Exists"
+      securityContext:
+        runAsUser: {{ .Values.userID }}
+        runAsGroup: {{ .Values.userGroup }}
+      containers:
+      - name: {{ .Release.name }}
+        image: "{{ .Values.image.registry }}/{{ .Values.image.name }}:{{ .Values.image.tag }}"
+        ports:
+        - name: metrics
+          containerPort: {{ .Values.port }}
+        args:
+        - 'prometheus'
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+        volumeMounts:
+        - name: root
+          mountPath: /rootfs
+          readOnly: true
+      volumes:
+      - name: root
+        hostPath:
+          path: /
+      serviceAccountName: {{ .Release.name }}

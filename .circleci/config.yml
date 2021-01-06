@@ -16,3 +16,17 @@ workflows:
           filters:
             tags:
               only: /^v.*/
+
+      - architect/push-to-app-catalog:
+          context: "architect"
+          name: push-scaphandre-to-playground-catalog
+          app_catalog: "giantswarm-playground-catalog"
+          app_catalog_test: "giantswarm-playground-test-catalog"
+          chart: "scaphandre"
+          requires:
+            - push-scaphandre-to-quay
+          # Needed to trigger job also on git tag.
+          filters:
+            tags:
+              only: /^v.*/
+              

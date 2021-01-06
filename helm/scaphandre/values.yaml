@@ -1,0 +1,17 @@
+image:
+  registry: quay.io
+  name: giantswarm/scaphandre
+  tag: [[ .Version ]]
+
+port: 8000
+
+resources:
+  limits:
+    memory: 75Mi
+  requests:
+    cpu: 75m
+    memory: 50Mi
+
+# Run as root user to get proper permissions
+userID: 0
+groupID: 0
