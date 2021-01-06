@@ -10,7 +10,6 @@ workflows:
           context: "architect"
           name: push-scaphandre-to-quay
           image: "quay.io/giantswarm/scaphandre"
-          resource_class: large
           username_envar: "QUAY_USERNAME"
           password_envar: "QUAY_PASSWORD"
           # Needed to trigger job also on git tag.
