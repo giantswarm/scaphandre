@@ -33,11 +33,19 @@ spec:
         resources:
 {{ toYaml .Values.resources | indent 10 }}
         volumeMounts:
-        - name: root
-          mountPath: /rootfs
-          readOnly: true
+        - mountPath: /proc
+          name: proc
+          readOnly: false
+        - mountPath: /sys/class/powercap
+          name: powercap
+          readOnly: false
       volumes:
-      - name: root
-        hostPath:
-          path: /
+      - hostPath:
+          path: /proc
+          type: "Directory"
+        name: proc
+      - hostPath:
+          path: /sys/class/powercap
+          type: "Directory"
+        name: powercap
       serviceAccountName: {{ .Chart.Name }}

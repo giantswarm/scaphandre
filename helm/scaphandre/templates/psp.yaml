@@ -5,7 +5,7 @@ metadata:
   labels:
     app.kubernetes.io/name: {{ .Chart.Name }}  
 spec:
-  privileged: false
+  privileged: true
   allowPrivilegeEscalation: false
   runAsUser:
     rule: RunAsAny
