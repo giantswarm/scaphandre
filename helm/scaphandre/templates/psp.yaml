@@ -1,9 +1,9 @@
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
-  name: {{ .Release.name }}
+  name: {{ .Chart.Name }}
   labels:
-    app.kubernetes.io/name: {{ .Release.name }}  
+    app.kubernetes.io/name: {{ .Chart.Name }}  
 spec:
   privileged: false
   allowPrivilegeEscalation: false

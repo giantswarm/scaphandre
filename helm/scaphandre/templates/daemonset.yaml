@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: {{ .Release.name }}
+  name: {{ .Chart.Name }}
   labels:
-    app.kubernetes.io/name: {{ .Release.name }}
+    app.kubernetes.io/name: {{ .Chart.Name }}
 spec:
   updateStrategy:
     type: RollingUpdate
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ .Release.name }}
+      app.kubernetes.io/name: {{ .Chart.Name }}
   template:
     metadata:
-      name: {{ .Release.name }}
+      name: {{ .Chart.Name }}
       labels:
-        app.kubernetes.io/name: {{ .Release.name }}
+        app.kubernetes.io/name: {{ .Chart.Name }}
     spec:
       tolerations:
       # Tolerate all taints for observability
@@ -23,7 +23,7 @@ spec:
         runAsUser: {{ .Values.userID }}
         runAsGroup: {{ .Values.userGroup }}
       containers:
-      - name: {{ .Release.name }}
+      - name: {{ .Chart.Name }}
         image: "{{ .Values.image.registry }}/{{ .Values.image.name }}:{{ .Values.image.tag }}"
         ports:
         - name: metrics
@@ -40,4 +40,4 @@ spec:
       - name: root
         hostPath:
           path: /
-      serviceAccountName: {{ .Release.name }}
+      serviceAccountName: {{ .Chart.Name }}
