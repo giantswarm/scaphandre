@@ -3,7 +3,7 @@ image:
   name: giantswarm/scaphandre
   tag: [[ .Version ]]
 
-port: 8000
+port: 8080
 
 resources:
   limits:
